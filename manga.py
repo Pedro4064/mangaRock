@@ -30,6 +30,7 @@ class mangaRock(webdriver.Chrome,webdriver.chrome.options.Options,webdriver.comm
             self.importToWeb()
         
         else:
+            print('asds')
             # login and go to favorites 
             self.logIn()
     
@@ -163,9 +164,6 @@ class mangaRock(webdriver.Chrome,webdriver.chrome.options.Options,webdriver.comm
 
         ####################################################################################################################################
             
-        # Reload the webpage 
-        self.driver.refresh()
-
         # Wait for the import btn to load then click it
         importXpath = '//*[@id="page-content"]/div/div/div/div/div[1]/div/button/span'
         ok = self.wait.until(webdriver.support.expected_conditions.visibility_of_element_located((webdriver.common.by.By.XPATH, importXpath)))
@@ -179,6 +177,6 @@ class mangaRock(webdriver.Chrome,webdriver.chrome.options.Options,webdriver.comm
         self.driver.get('https://mangarock.com/account/favorite')
 
 if __name__ == '__main__':
-    manga = mangaRock(username = 'pedrohlcruz@gmail.com',password = 'P3dr0mangarock')
+    manga = mangaRock(username = '',password = '')
      
     manga.getFavorites(importFavorites = True)
