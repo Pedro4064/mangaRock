@@ -2,6 +2,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions
+import json
 import time
 import os
 
@@ -30,7 +31,6 @@ class mangaRock(webdriver.Chrome,webdriver.chrome.options.Options,webdriver.comm
             self.importToWeb()
         
         else:
-            print('asds')
             # login and go to favorites 
             self.logIn()
     
@@ -46,19 +46,33 @@ class mangaRock(webdriver.Chrome,webdriver.chrome.options.Options,webdriver.comm
 
         print(self.nFavorites)
 
-        # get all the favorites' names
+        # get all the favorites' names and authors
         self.favorites = []
+        self.authors = []
+
         counter = 1
 
         for manga in range(1,self.nFavorites+1):
 
+            # Get the title
             self.favorites.append(self.driver.find_element_by_xpath(self.xPath %(counter)).text)
+
+            # Try to get the name of the author, if it falies loof for it in the other xpath
+            try:
+                self.authors.append(self.driver.find_element_by_xpath('//*[@id="all"]/div/div[2]/div[%d]/div[2]/a/span' %(counter)).text)
+            except:
+                # if it fails  again, just pass
+                try:
+                    self.authors.append(self.driver.find_element_by_xpath('//*[@id="all"]/div/div[3]/div[%d]/div[2]/a/span' %(counter)).text)
+                except:
+                    self.authors.append(None)
+                    
             
             # Update counter 
             counter+=1
 
-        for manga in self.favorites:
-            print(manga)
+        for manga, author in zip(self.favorites,self.authors):
+            print(manga,author)
 
         # Save in the file
         self.saveFavorites()
@@ -110,11 +124,10 @@ class mangaRock(webdriver.Chrome,webdriver.chrome.options.Options,webdriver.comm
     def saveFavorites(self):
 
         # Create the file and open in write mode
-        with open('Favorites.txt','w') as file:
+        with open('Favorites.json','w') as file:
             
-            # for every manga in favorite, add it to the file
-            for manga in self.favorites:
-                file.write(manga+'\n')
+            # Save the json file
+            file.write(self.createJson())
     
     def importToWeb(self):
   
@@ -176,7 +189,20 @@ class mangaRock(webdriver.Chrome,webdriver.chrome.options.Options,webdriver.comm
         # Go to the favorites page
         self.driver.get('https://mangarock.com/account/favorite')
 
+    def createJson(self):
+
+        # Creates a list of dictionaries containing all the data
+        favoriteJson = [{"Title":None,"Author":None} for n in range(self.nFavorites)]
+        for manga,author,data in zip(self.favorites,self.authors,favoriteJson):
+            data["Title"]  = manga
+            data["Author"] = author
+
+        # Make it a json string
+        favoriteJson = json.dumps(favoriteJson, indent=4)
+
+        return favoriteJson
+
 if __name__ == '__main__':
-    manga = mangaRock(username = '',password = '')
+    manga = mangaRock(username = 'pedrohlcruz@gmail.com',password = 'P3dr0mangarock')
      
-    manga.getFavorites(importFavorites = True)
+    manga.getFavorites(importFavorites = False)
