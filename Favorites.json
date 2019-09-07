@@ -4,8 +4,16 @@
         "Author": "Atsushi Ohkubo"
     },
     {
+        "Title": "My Hero Academia",
+        "Author": "Kouhei Horikoshi"
+    },
+    {
         "Title": "Attack On Titan",
         "Author": "Hajime Isayama"
+    },
+    {
+        "Title": "Kaguya-sama: Love is War",
+        "Author": "Aka Akasaka"
     },
     {
         "Title": "The Seven Deadly Sins",
@@ -20,6 +28,10 @@
         "Author": "Kumanano"
     },
     {
+        "Title": "Demon Slayer: Kimetsu no Yaiba",
+        "Author": "Koyoharu Gotouge"
+    },
+    {
         "Title": "Miss Kobayashi's Dragon Maid",
         "Author": "Cool-kyou Shinja"
     },
@@ -28,7 +40,7 @@
         "Author": "Souichirou Yamamoto"
     },
     {
-        "Title": "The Ancient Magus Bride",
+        "Title": "The Ancient Magus\u2019 Bride",
         "Author": "Kore Yamazaki"
     },
     {
