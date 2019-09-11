@@ -203,6 +203,6 @@ class mangaRock(webdriver.Chrome,webdriver.chrome.options.Options,webdriver.comm
         return favoriteJson
 
 if __name__ == '__main__':
-    manga = mangaRock(username = 'pedrohlcruz@gmail.com',password = 'P3dr0mangarock')
+    manga = mangaRock(username = '',password = '')
      
     manga.getFavorites(importFavorites = False)
